@@ -18,20 +18,22 @@ return new class extends Migration
             $table->string('father_name')->nullable();
             $table->string('email')->unique()->nullable();
             $table->string('phone');
+            $table->string('phone_2');
             $table->date('birth_date');
             $table->boolean('gender')->default(true); // true erkak false ayol
             $table->string('avatar');
             $table->string('passport_series');
             $table->string('passport_number');
-            $table->string('passport_given_by');
             $table->string('passport_pdf');
             $table->enum('education',['school', 'college'])->default('school');
             $table->string('diploma_series');
             $table->string('diploma_number');
             $table->string('diploma_pdf');
             $table->enum('education_livel', ['bachelor', 'master'])->default('bachelor');
-            $table->string('course_name');
-            $table->string('course_duration');
+            $table->string('course_direction');
+            $table->string('educate_direction');
+            $table->string('passport_rus')->nullable();
+            $table->string('propiska')->nullable();
             $table->timestamps();
         });
     }
