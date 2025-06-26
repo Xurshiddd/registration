@@ -18,7 +18,7 @@ return new class extends Migration
             $table->string('father_name')->nullable();
             $table->string('email')->unique()->nullable();
             $table->string('phone');
-            $table->string('phone_2');
+            $table->string('phone_2')->nullable();
             $table->date('birth_date');
             $table->boolean('gender')->default(true); // true erkak false ayol
             $table->string('avatar');

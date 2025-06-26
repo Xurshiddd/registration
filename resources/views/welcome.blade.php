@@ -20,8 +20,51 @@
 </head>
 <body class="">
     @include('navbar')
+    <div class="flex justify-between items-center mb-4">
+        @if ($errors->any())
+        <div class="alert alert-danger">
+            <ul class="mb-0">
+                @foreach ($errors->all() as $error)
+                <li>{{ $error }}</li>
+                @endforeach
+            </ul>
+        </div>
+        @endif
+        
+        @if (session('success'))
+        <div x-data="{ show: true }" x-init="setTimeout(() => show = false, 3000)" x-show="show"
+            class="bg-green-100 text-green-800 p-4 rounded-lg mb-4 transition-all">
+            {{ session('success') }}
+        </div>
+        @endif
+        
+    </div>
+    <div id="loginModal" class="fixed inset-0 flex items-center justify-center bg-black bg-opacity-50 z-50 hidden">
+                <div class="bg-white rounded-lg shadow-lg w-full max-w-sm p-6 relative">
+                    <button 
+                        class="absolute top-2 right-2 text-gray-500 hover:text-gray-700 text-2xl font-bold"
+                        onclick="document.getElementById('loginModal').classList.add('hidden')"
+                        aria-label="Close"
+                    >&times;</button>
+                    <h2 class="text-2xl font-semibold mb-4 text-center text-gray-800">Login</h2>
+                    <form method="POST" action="{{ route('login') }}">
+                        @csrf
+                        <div class="mb-4">
+                            <label class="block text-gray-700 mb-2" for="email">Email</label>
+                            <input class="w-full px-3 py-2 border rounded focus:outline-none focus:ring focus:border-blue-400" type="email" name="email" id="email" required autofocus>
+                        </div>
+                        <div class="mb-6">
+                            <label class="block text-gray-700 mb-2" for="password">Password</label>
+                            <input class="w-full px-3 py-2 border rounded focus:outline-none focus:ring focus:border-blue-400" type="password" name="password" id="password" required>
+                        </div>
+                        <button type="submit" class="w-full bg-blue-600 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded transition duration-200">
+                            Login
+                        </button>
+                    </form>
+                </div>
+            </div> 
     <main class="container mx-auto p-4">
-        <form action="{{ route('save') }}" method="post" enctype="multipart/form-data">
+        <form action="{{ route('save') }}" method="POST" enctype="multipart/form-data">
             @csrf
             <div class="card">
                 <div class="card-header">
@@ -97,11 +140,11 @@
                         </div>
                         <div class="col-md-4">
                             <label for="diploma_serial" class="form-label">{{ __('form.diploma_serial') }}<span class="text-red-600">*</span></label>
-                            <input type="text" class="form-control" id="diploma_serial" name="diploma_serial" placeholder="_-________" maxlength="10">
+                            <input type="text" class="form-control" id="diploma_serial" name="diploma_series" placeholder="_-________" maxlength="10">
                         </div>
                         <div class="col-md-4">
                             <label for="diploma_pdf" class="form-label">{{ __('form.diploma_pdf') }}<span class="text-red-600">*</span></label>
-                            <input type="file" class="form-control" id="diploma_pdf" name="diplom" accept="application/pdf">
+                            <input type="file" class="form-control" id="diploma_pdf" name="diploma_pdf" accept="application/pdf">
                         </div>
                     </div>
                 </div>
@@ -148,7 +191,7 @@
                     <div class="row mb-3">
                         <div class="col-md-4">
                             <label for="passport_serial" class="form-label">{{ __('form.passport_serial') }}<span class="text-red-600">*</span></label>
-                            <input type="text" class="form-control text-uppercase" id="passport_serial" name="passport_serial" placeholder="{{ __('form.passport_serial') }}" maxlength="2" style="text-transform:uppercase;" oninput="this.value = this.value.toUpperCase();">
+                            <input type="text" class="form-control text-uppercase" id="passport_serial" name="passport_series" placeholder="{{ __('form.passport_serial') }}" maxlength="2" style="text-transform:uppercase;" oninput="this.value = this.value.toUpperCase();">
                         </div>
                         <div class="col-md-4">
                             <label for="passport_number" class="form-label">{{ __('form.passport_number') }}<span class="text-red-600">*</span></label>
@@ -252,7 +295,7 @@
                 var iti2 = window.intlTelInput(input2, {
                     initialCountry: "uz",
                     utilsScript: "https://cdn.jsdelivr.net/npm/intl-tel-input/build/js/utils.js"
-                    });
+                });
             }
         });
     </script>
